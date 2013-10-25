@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+# set -x
 
 freq=${1-5}
 here="`dirname \"$0\"`"
