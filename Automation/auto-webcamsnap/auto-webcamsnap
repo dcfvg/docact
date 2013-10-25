@@ -1,0 +1,41 @@
+#!/bin/bash
+set -x
+
+freq=${1-5}
+here="`dirname \"$0\"`"
+assets="$here/assets"
+
+function capture {
+  
+  if [ "$(uname)" == "Darwin" ]; then
+      # Mac OS X platform
+      imagesnap $assets/webcam.tmp.jpg
+  elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+      # Linux platform
+      # streamer -f jpeg -s 1920x1080 -o webcam.jpg
+      fswebcam -r 1920x1080 $assets/webcam.tmp.jpg
+  fi
+  
+  # now=$(date +"%y.%m.%d-%H.%M.%S")  # human readable timestamp 
+  
+  now=$(date +%s)                   # unix timestamp
+  cp $assets/webcam.tmp.jpg $assets/$now.jpg
+}
+
+echo "Setting frequence to $freq s"
+
+if [ ! -d "$assets" ]; then
+  mkdir -v $assets
+fi
+
+cd $here
+
+while true; do
+  capture
+  for (( i=$freq; i>0; i--)); do
+    sleep 1 &
+    printf "next shot in $i s \r"
+    wait    
+    printf "              \r"
+  done
+done
