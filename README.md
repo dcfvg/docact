@@ -40,5 +40,12 @@ That's why the tool list below in not exhaustive. She mix-up different aspect of
 ### Editing
 
 - stackmixer
+- montage-brutal 
 
-### Performance / Display
+### Performance / Display 
+
+
+### map/stats
+
+- attachment poster
+- image-surface
